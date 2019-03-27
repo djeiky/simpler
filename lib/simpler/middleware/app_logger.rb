@@ -8,13 +8,17 @@ class AppLogger
   end
 
   def call(env)
-    @logger.info("Request: #{env['REQUEST_METHOD']} #{env['REQUEST_URI']}")
     status, headers, body = @app.call(env)
-    @logger.info("Handler #{env['simpler.controller'].class}\##{env['simpler.action']}")
-    @logger.info("Params: #{env['simpler.request_params']}")
-    @logger.info("Response: #{status} #{headers['Content-Type']} #{env['simpler.template_path']}")
-
+    @logger.info(info_message(env, status, headers))
     [status, headers, body]
+  end
+
+private
+  def info_message(env, status, headers)
+    "Request: #{env['REQUEST_METHOD']} #{env['REQUEST_URI']}\n" \
+    "Handler #{env['simpler.controller'].class}\##{env['simpler.action']}\n" \
+    "Params: #{env['simpler.request_params']}\n" \
+    "Response: #{status} #{headers['Content-Type']} #{env['simpler.template_path']}\n" \
   end
 
 end

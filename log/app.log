@@ -44,3 +44,8 @@ I, [2019-03-27T20:54:04.784617 #2194]  INFO -- : Request: GET /tests/90
 I, [2019-03-27T20:54:04.788455 #2194]  INFO -- : Handler TestsController#show
 I, [2019-03-27T20:54:04.788592 #2194]  INFO -- : Params: {:id=>"90"}
 I, [2019-03-27T20:54:04.788674 #2194]  INFO -- : Response: 200 text/html 
+I, [2019-03-27T23:14:50.404783 #4238]  INFO -- : Request: GET /tests/90
+Handler TestsController#show
+Params: {:id=>"90"}
+Response: 200 text/html 
+
