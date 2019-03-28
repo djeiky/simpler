@@ -1,22 +1,21 @@
 require 'erb'
+require_relative "renderers/plain_text_renderer"
+require_relative "renderers/html_renderer"
 
 module Simpler
   class View
 
-    VIEW_BASE_PATH = 'app/views'.freeze
+    RENDERERS = {"text/plain" => PlainTextRenderer, "text/html" => HtmlRenderer}
+    DEFAULT_RENDERER = RENDERERS["text/html"]
 
     def initialize(env)
       @env = env
     end
 
     def render(binding)
-      if template || response_type.nil?
-        template = File.read(template_path)
-
-        ERB.new(template).result(binding)
-      else
-        response_data if response_type == :plain
-      end
+      renderer = RENDERERS[response_type] || DEFAULT_RENDERER
+      renderer = renderer.new(@env)
+      renderer.render(binding)
     end
 
     private
@@ -24,28 +23,5 @@ module Simpler
     def response_type
       @env['simpler.response_type']
     end
-
-    def response_data
-      @env['simpler.response_data']
-    end
-
-    def controller
-      @env['simpler.controller']
-    end
-
-    def action
-      @env['simpler.action']
-    end
-
-    def template
-      @env['simpler.template']
-    end
-
-    def template_path
-      path = template || [controller.name, action].join('/')
-
-      Simpler.root.join(VIEW_BASE_PATH, "#{path}.html.erb")
-    end
-
   end
 end

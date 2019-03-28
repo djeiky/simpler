@@ -27,12 +27,12 @@ module Simpler
         @response["#{header_type}"] = value
       end
 
-      def status=(number)
+      def status(number)
         @response.status = number
       end
 
       def params
-        @request.params.merge!(@request.env["simpler.request_params"])
+        @request.params.merge!(@request.env["simpler.route_params"])
       end
 
     private
@@ -58,9 +58,12 @@ module Simpler
     def render(template)
       if template.is_a?(String)
         @request.env['simpler.template'] = template
+        @request.env['simpler.response_type'] = "text/html"
+        @response['Content-Type'] = "text/html"
       elsif template.is_a?(Hash)
-        @request.env['simpler.response_type'] = template.keys.first
+        @request.env['simpler.response_type'] = "text/plain"
         @request.env['simpler.response_data'] = template.values.first
+        @response['Content-Type'] = "text/plain"
       end
     end
 

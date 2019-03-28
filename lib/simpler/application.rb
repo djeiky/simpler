@@ -59,7 +59,7 @@ module Simpler
     def route_not_found
       response = Rack::Response.new
       response.status = 404
-      response.headers["Content-type"] = "text/plain"
+      response.headers["Content-Type"] = "text/plain"
       response.write("Unknown Path")
       response.finish
     end

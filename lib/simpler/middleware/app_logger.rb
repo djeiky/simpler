@@ -17,7 +17,7 @@ private
   def info_message(env, status, headers)
     "Request: #{env['REQUEST_METHOD']} #{env['REQUEST_URI']}\n" \
     "Handler #{env['simpler.controller'].class}\##{env['simpler.action']}\n" \
-    "Params: #{env['simpler.request_params']}\n" \
+    "Params: #{env['simpler.route_params']}\n" \
     "Response: #{status} #{headers['Content-Type']} #{env['simpler.template_path']}\n" \
   end
 

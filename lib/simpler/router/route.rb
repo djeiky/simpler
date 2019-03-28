@@ -20,15 +20,15 @@ module Simpler
 
       def parse_params(path)
         route_path = @path.split("/")
-        get_path = path.split("/")
-        return false unless route_path.size == get_path.size
+        request_path = path.split("/")
+        return false unless route_path.size == request_path.size
 
         params = {}
         route_path.each_with_index do |item, index|
           if item[0] == ":"
-            params.merge!(item.gsub(":", "").to_sym => get_path[index])
+            params.merge!(item.gsub(":", "").to_sym => request_path[index])
           else
-            return false unless item == get_path[index]
+            return false unless item == request_path[index]
           end
         end
         @params = params

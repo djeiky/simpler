@@ -20,10 +20,9 @@ module Simpler
       path = env['PATH_INFO']
 
       route = @routes.find { |route| route.match?(method, path) }
-      env["simpler.request_params"] ||= {}
-      env["simpler.request_params"].update(route.params) if route
+      env["simpler.route_params"] ||= {}
+      env["simpler.route_params"].update(route.params) if route
 
-      puts route.params
       route
     end
 
